@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach Salah Laaniba - Vidéos</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        body {
+            padding-top: 80px;
+            padding-bottom: 80px;
+            background-color: #f8f9fa;
+        }
+        
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #dc3545 !important;
+            text-align: center;
+        }
+        
+        .fixed-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #f8f9fa;
+        }
+        
+        .card {
+            transition: transform 0.3s;
+            margin-bottom: 25px;
+            border: 2px solid #dc3545;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            cursor: pointer;
+            background-color: #000;
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .thumbnail-placeholder {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, #dc3545 0%, #ff6b7f 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+        }
+        
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            color: #dc3545;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            opacity: 0.9;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+        
+        .video-container:hover .play-button {
+            color: #ff0019;
+            opacity: 1;
+            font-size: 55px;
+        }
+        
+        .modal-video-container {
+            position: relative;
+            padding-bottom: 75%; /* Augmenté pour mobile */
+            height: 0;
+            overflow: hidden;
+        }
+        
+        @media (min-width: 768px) {
+            .modal-video-container {
+                padding-bottom: 56.25%; /* Ratio normal pour desktop */
+            }
+        }
+        
+        .modal-video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        .whatsapp-btn {
+            background-color: #25D366;
+            border-color: #25D366;
+        }
+        
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+            border-color: #128C7E;
+        }
+        
+        .watch-btn {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        
+        .watch-btn:hover {
+            background-color: #bb2d3b;
+            border-color: #bb2d3b;
+        }
+        
+        .replay-btn {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: white;
+        }
+        
+        .replay-btn:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+            color: white;
+        }
+        
+        .request-btn {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+            color: white;
+        }
+        
+        .request-btn:hover {
+            background-color: #138496;
+            border-color: #117a8b;
+            color: white;
+        }
+        
+        .card-title {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .card-text {
+            color: #7f8c8d;
+        }
+        
+        .date-badge {
+            background-color: #e9ecef;
+            color: #6c757d;
+        }
+        
+        .alert-notification {
+            position: fixed;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1050;
+            animation: slideIn 0.5s forwards, fadeOut 0.5s forwards 2.5s;
+            display: none;
+            min-width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        @keyframes slideIn {
+            from {
+                top: -50px;
+                opacity: 0;
+            }
+            to {
+                top: 90px;
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+        
+        .video-card {
+            margin-bottom: 30px;
+        }
+        
+        .spacer {
+            height: 15px;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-container .btn {
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        #videoModal .modal-dialog {
+            max-width: 800px;
+            height: 85vh;
+        }
+        
+        #videoModal .modal-content {
+            height: 100%;
+        }
+        
+        #videoModal .modal-body {
+            height: calc(100% - 120px);
+            overflow-y: auto;
+            padding: 0;
+            position: relative;
+        }
+        
+        .sponsor-section {
+            background: linear-gradient(135deg, #ffc107 0%, #ffd54f 100%);
+            border-top: 1px solid #dee2e6;
+            padding: 12px 15px;
+            font-size: 0.9rem;
+            text-align: center;
+            animation: pulse 2s infinite;
+            margin-top: 10px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            margin: 10px auto;
+        }
+        
+        .sponsor-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        .sponsor-name {
+            color: #d63384;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .sponsor-link {
+            color: #0d6efd;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        
+        .sponsor-link:hover {
+            color: #0a58ca;
+            text-decoration: underline;
+        }
+        
+        .request-textarea {
+            resize: none;
+            height: 100px;
+        }
+        
+        .end-message {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            display: none;
+            z-index: 10;
+        }
+        
+        .end-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: #dc3545;
+        }
+        
+        .end-buttons {
+            margin-top: 20px;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .social-icon {
+            font-size: 1.5rem;
+            color: #6c757d;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+            color: #dc3545;
+        }
+        
+        .facebook:hover { color: #3b5998; }
+        .instagram:hover { color: #e4405f; }
+        .youtube:hover { color: #cd201f; }
+        .twitter:hover { color: #1da1f2; }
+        .tiktok:hover { color: #000000; }
+        
+        .content-spacer {
+            height: 20px;
+        }
+        
+        /* Styles pour le calendrier de filtre */
+        .calendar-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e9ecef;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .calendar-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 0;
+        }
+        
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .filter-type-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .filter-type-btn {
+            padding: 8px 15px;
+            border: 1px solid #ced4da;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-type-btn.active {
+            background-color: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+        
+        .date-range-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .flatpickr-input {
+            max-width: 200px;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .date-separator {
+            color: #6c757d;
+        }
+        
+        .reset-filter-btn {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .reset-filter-btn:hover {
+            background-color: #5a6268;
+        }
+        
+        .no-videos-message {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+        
+        .no-videos-message i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #dc3545;
+        }
+        
+        @media (max-width: 768px) {
+            .calendar-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .filter-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .date-range-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .flatpickr-input {
+                width: 100%;
+                max-width: none;
+            }
+        }
+        
+        /* Styles pour la fenêtre publicitaire */
+        .ad-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .ad-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .ad-container {
+            background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+            border-radius: 15px;
+            padding: 25px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 3px solid #ffd700;
+            position: relative;
+            animation: popIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .ad-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.2);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .ad-close:hover {
+            background: rgba(0, 0, 0, 0.4);
+            transform: rotate(90deg);
+        }
+        
+        .ad-title {
+            text-align: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ad-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ad-text {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .ad-contact {
+            font-weight: bold;
+            color: #dc3545;
+            font-size: 1.2rem;
+        }
+        
+        .ad-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .ad-contact-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .ad-contact-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .ad-contact-btn span {
+            font-size: 0.7rem;
+            margin-top: 5px;
+        }
+        
+        .ad-whatsapp {
+            background: #25D366;
+        }
+        
+        .ad-sms {
+            background: #17a2b8;
+        }
+        
+        .ad-call {
+            background: #28a745;
+        }
+        
+        .ad-ok-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #dc3545 0%, #ff6b7f 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .ad-ok-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Styles pour l'alerte de résultats de filtre */
+        .filter-result-alert {
+            position: fixed;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1050;
+            animation: slideIn 0.5s forwards, fadeOut 0.5s forwards 3s;
+            display: none;
+            min-width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+        }
+        
+        .filter-result-alert.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+        }
+        
+        .filter-result-alert.info {
+            background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+            color: white;
+        }
+        
+        .filter-result-alert i {
+            margin-right: 8px;
+        }
+        
+        /* Styles pour le formulaire de demande de vidéo */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Fenêtre publicitaire -->
+    <div class="ad-overlay" id="adOverlay">
+        <div class="ad-container">
+            <div class="ad-close" id="adClose">
+                <i class="fas fa-times"></i>
+            </div>
+            <h2 class="ad-title">Publicité</h2>
+            <div class="ad-content">
+                <p class="ad-text">Contactez-nous pour diffuser votre publicité sur le site</p>
+                <p class="ad-contact">+212 608-975435</p>
+            </div>
+            <div class="ad-buttons">
+                <div class="ad-contact-btn ad-whatsapp" id="adWhatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </div>
+                <div class="ad-contact-btn ad-sms" id="adSms">
+                    <i class="fas fa-sms"></i>
+                    <span>SMS</span>
+                </div>
+                <div class="ad-contact-btn ad-call" id="adCall">
+                    <i class="fas fa-phone"></i>
+                    <span>Appel</span>
+                </div>
+            </div>
+            <button class="ad-ok-btn" id="adOkBtn">OK</button>
+        </div>
+    </div>
+
+    <!-- Header fixe -->
+    <header class="fixed-header navbar navbar-dark">
+        <div class="container">
+            <span class="navbar-brand mb-0 h1 mx-auto">Coach Salah Laaniba</span>
+        </div>
+    </header>
+
+    <!-- Notification d'alerte -->
+    <div class="alert alert-info alert-notification" id="notificationAlert" role="alert">
+        <strong id="notificationText"></strong>
+    </div>
+
+    <!-- Alerte de résultats de filtre -->
+    <div class="filter-result-alert" id="filterResultAlert" role="alert">
+        <strong id="filterResultText"></strong>
+    </div>
+
+    <!-- Modal pour afficher les vidéos -->
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="videoModalLabel">Titre de la vidéo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-video-container">
+                        <div id="player"></div>
+                        <div class="end-message" id="endMessage">
+                            <i class="fas fa-check-circle end-icon"></i>
+                            <h3>Merci d'avoir regardé cette vidéo</h3>
+                            <p>Nous espérons que vous l'avez appréciée et qu'elle vous a été utile.</p>
+                            <div class="end-buttons">
+                                <button class="btn replay-btn me-2" onclick="replayVideo()">
+                                    <i class="fas fa-redo me-1"></i> Revoir
+                                </button>
+                                <button class="btn request-btn" onclick="openRequestModal()">
+                                    <i class="fas fa-video me-1"></i> Demander une vidéo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sponsor-section mt-3" id="sponsorSection">
+                        <div class="sponsor-label">Cette vidéo est sponsorisée par :</div>
+                        <div class="sponsor-name" id="sponsorName">Nom du sponsor</div>
+                        <a href="#" class="sponsor-link" id="sponsorLink" target="_blank">https://www.exemple.com</a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button type="button" class="btn request-btn" onclick="openRequestModal()">
+                        <i class="fas fa-video me-1"></i> Demander une vidéo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour demander une vidéo -->
+    <div class="modal fade" id="requestModal" tabindex="-1" aria-labelledby="requestModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="requestModalLabel">Demander une vidéo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Remplissez ce formulaire pour suggérer un sujet de vidéo :</p>
+                    <div class="form-group">
+                        <label for="requestName" class="form-label">Votre nom :</label>
+                        <input type="text" class="form-control" id="requestName" placeholder="Votre nom">
+                    </div>
+                    <div class="form-group">
+                        <label for="requestTopic" class="form-label">Sujet de la vidéo :</label>
+                        <input type="text" class="form-control" id="requestTopic" placeholder="Sujet de la vidéo">
+                    </div>
+                    <div class="form-group">
+                        <label for="requestDetails" class="form-label">Détails et explications :</label>
+                        <textarea class="form-control request-textarea" id="requestDetails" placeholder="Décrivez en détail le sujet que vous souhaitez voir traité..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn request-btn" id="sendRequestBtn">
+                        <i class="fas fa-paper-plane me-1"></i> Envoyer la demande
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <main class="container my-4">
+        <!-- Section Calendrier/Filtrage -->
+        <section class="calendar-section">
+            <div class="calendar-header">
+                <h2 class="calendar-title">Filtrer les vidéos par date</h2>
+                <div class="filter-controls">
+                    <button id="resetFilter" class="reset-filter-btn">
+                        <i class="fas fa-times me-1"></i> Réinitialiser
+                    </button>
+                </div>
+            </div>
+            
+            <div class="filter-type-selector">
+                <button class="filter-type-btn active" data-filter-type="single">Date unique</button>
+                <button class="filter-type-btn" data-filter-type="range">Plage de dates</button>
+            </div>
+            
+            <div id="singleDateFilter" class="filter-controls">
+                <input type="text" id="dateFilter" class="flatpickr-input" placeholder="Sélectionner une date">
+            </div>
+            
+            <div id="dateRangeFilter" class="filter-controls" style="display: none;">
+                <div class="date-range-container">
+                    <input type="text" id="startDate" class="flatpickr-input" placeholder="Date de début">
+                    <span class="date-separator">au</span>
+                    <input type="text" id="endDate" class="flatpickr-input" placeholder="Date de fin">
+                </div>
+            </div>
+            
+            <div class="selected-date-container mt-3">
+                <span id="selectedDateText">Aucune date sélectionnée - Affichage de toutes les vidéos</span>
+            </div>
+        </section>
+        
+        <!-- Petit espace entre le header et les cartes -->
+        <div class="content-spacer"></div>
+        
+        <div class="row" id="videoContainer">
+            <!-- Les cartes vidéo seront générées dynamiquement par JavaScript -->
+        </div>
+        
+        <!-- Message quand aucune vidéo ne correspond au filtre -->
+        <div class="no-videos-message" id="noVideosMessage" style="display: none;">
+            <i class="fas fa-video-slash"></i>
+            <h3>Aucune vidéo trouvée</h3>
+            <p>Aucune vidéo ne correspond aux critères de filtrage sélectionnés.</p>
+        </div>
+        
+        <!-- Espacement supplémentaire -->
+        <div class="spacer"></div>
+    </main>
+
+    <!-- Footer fixe avec icônes sociales -->
+    <footer class="fixed-footer py-3">
+        <div class="container">
+            <div class="social-icons">
+                <a href="https://www.facebook.com/coachsalah1" target="_blank" class="social-icon facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com/coach_salah1" target="_blank" class="social-icon instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/@CoachSalah" target="_blank" class="social-icon youtube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://twitter.com/coach_salah1" target="_blank" class="social-icon twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://tiktok.com/@coach_salah1" target="_blank" class="social-icon tiktok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>
+    <!-- API YouTube IFrame -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        // Données des vidéos - Facile à modifier pour ajouter de nouvelles vidéos
+        const videoData = [
+            {
+                id: 4,
+                title: "ريمونتادا للتاريخ",
+                description: "ريمونتادا للتاريخ! كيف تفوق المغرب تكتيكياً على مدغشقر في نهائي مجنون",
+                youtubeId: "gllP_MkE-LI",
+                date: "2025-08-31",
+                category: "entrainement",
+                thumbnail: "images/id4.jpg",
+                sponsor: {
+                    name: "FitLife Nutrition",
+                    link: "https://www.fitlifenutrition.com"
+                }
+            },
+            {
+                id: 3,
+                title: "تحليل تكتيكي مفصل",
+                description: "كيف تفوق المغرب على السنغال في نصف نهائي صعب جدا؟",
+                youtubeId: "9A1H3nWN9FU",
+                date: "2025-08-31",
+                category: "nutrition",
+                thumbnail: "images/id3.jpg",
+                sponsor: {
+                    name: "SportPlus",
+                    link: "https://www.sportplus.com"
+                }
+            },
+            {
+                id: 2,
+                title: "ريمونتادا في دقيقة",
+                description: "ريمونتادا في دقيقة! تحليل تكتيكي لمباراة ريال مدريد ومايوركا.. كيف قلب ألونسو الطاولة؟",
+                youtubeId: "bawQrbv85Nw",
+                date: "2025-08-31",
+                category: "conseils",
+                thumbnail: "images/id2.jpg",
+                sponsor: {
+                    name: "FlexiStretch",
+                    link: "https://www.flexistretch.com"
+                }
+            },
+            {
+                id: 1,
+                title: "راشفورد في برشلونة",
+                description: "راشفورد في برشلونة .. هل يكرر تجربة هنري الناجحة أم يسقط في فخ كوتينيو؟",
+                youtubeId: "aiuz8tepEsU",
+                date: "2025-08-05",
+                category: "nutrition",
+                thumbnail: "images/id1.jpg",
+                sponsor: {
+                    name: "SportPlus",
+                    link: "https://www.sportplus.com"
+                }
+            }
+        ];
+
+        let currentVideoTitle = "";
+        let currentYoutubeId = "";
+        let youtubePlayer = null;
+        let currentSponsor = null;
+        let selectedDate = null;
+        let selectedDateRange = null;
+        let flatpickrInstance = null;
+        let flatpickrRangeInstance = null;
+        let adInterval = null;
+        const phoneNumber = "212608975435";
+        let currentFilterType = "single";
+
+        // Fonction pour formater la date en français
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            return date.toLocaleDateString('fr-FR', options);
+        }
+
+        // Fonction pour formater la date en format lisible
+        function formatDateForDisplay(dateString) {
+            const date = new Date(dateString);
+            const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+            return date.toLocaleDateString('fr-FR', options);
+        }
+
+        // Fonction pour formater une plage de dates
+        function formatDateRangeForDisplay(startDate, endDate) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            
+            return `Du ${start.toLocaleDateString('fr-FR', options)} au ${end.toLocaleDateString('fr-FR', options)}`;
+        }
+
+        // Fonction pour afficher l'alerte de résultats de filtre
+        function showFilterResultAlert(videoCount, isFiltered = false) {
+            const alert = document.getElementById('filterResultAlert');
+            const alertText = document.getElementById('filterResultText');
+            
+            if (videoCount === 0) {
+                alert.className = 'filter-result-alert info';
+                alertText.innerHTML = '<i class="fas fa-info-circle"></i> Aucune vidéo trouvée';
+            } else if (isFiltered) {
+                alert.className = 'filter-result-alert success';
+                alertText.innerHTML = `<i class="fas fa-check-circle"></i> ${videoCount} vidéo${videoCount > 1 ? 's' : ''} trouvée${videoCount > 1 ? 's' : ''}`;
+            } else {
+                alert.className = 'filter-result-alert info';
+                alertText.innerHTML = `<i class="fas fa-video"></i> ${videoCount} vidéo${videoCount > 1 ? 's' : ''} au total`;
+            }
+            
+            alert.style.display = 'block';
+            
+            // Réinitialiser l'animation
+            alert.style.animation = 'none';
+            setTimeout(() => {
+                alert.style.animation = 'slideIn 0.5s forwards, fadeOut 0.5s forwards 3s';
+            }, 10);
+            
+            // Cacher après l'animation
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 3500);
+        }
+
+        // Fonction pour envoyer une demande de vidéo via WhatsApp
+        function sendVideoRequest() {
+            const name = document.getElementById('requestName').value;
+            const topic = document.getElementById('requestTopic').value;
+            const details = document.getElementById('requestDetails').value;
+            
+            if (!topic) {
+                showNotification('Veuillez saisir un sujet pour votre demande', 'warning');
+                return;
+            }
+            
+            const message = `Nouvelle demande de vidéo:\n\nDe: ${name || 'Non spécifié'}\nSujet: ${topic}\nDétails: ${details || 'Aucun détail supplémentaire'}`;
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+            
+            // Fermer la modale
+            const requestModal = bootstrap.Modal.getInstance(document.getElementById('requestModal'));
+            requestModal.hide();
+            
+            // Afficher une notification
+            showNotification('Votre demande a été envoyée avec succès', 'success');
+            
+            // Réinitialiser le formulaire
+            document.getElementById('requestName').value = '';
+            document.getElementById('requestTopic').value = '';
+            document.getElementById('requestDetails').value = '';
+        }
+
+        // Fonction pour ouvrir la modale de demande de vidéo
+        function openRequestModal() {
+            // Fermer la modale vidéo si elle est ouverte
+            const videoModal = bootstrap.Modal.getInstance(document.getElementById('videoModal'));
+            if (videoModal) videoModal.hide();
+            
+            // Ouvrir la modale de demande
+            const requestModal = new bootstrap.Modal(document.getElementById('requestModal'));
+            requestModal.show();
+        }
+
+        // Fonction pour rejouer la vidéo
+        function replayVideo() {
+            if (youtubePlayer) {
+                youtubePlayer.seekTo(0);
+                youtubePlayer.playVideo();
+                document.getElementById('endMessage').style.display = 'none';
+            }
+        }
+
+        // Fonction pour afficher une notification
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notificationAlert');
+            const notificationText = document.getElementById('notificationText');
+            
+            notificationText.textContent = message;
+            notification.className = `alert alert-${type} alert-notification`;
+            notification.style.display = 'block';
+            
+            // Réinitialiser l'animation
+            notification.style.animation = 'none';
+            setTimeout(() => {
+                notification.style.animation = 'slideIn 0.5s forwards, fadeOut 0.5s forwards 2.5s';
+            }, 10);
+            
+            // Cacher après l'animation
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Fonction pour initialiser le lecteur YouTube
+        function onYouTubeIframeAPIReady() {
+            // Cette fonction est appelée automatiquement par l'API YouTube
+            console.log("API YouTube prête");
+        }
+
+        // Fonction pour créer le lecteur YouTube
+        function createYouTubePlayer(youtubeId) {
+            // Détruire le lecteur existant s'il y en a un
+            if (youtubePlayer) {
+                youtubePlayer.destroy();
+            }
+            
+            youtubePlayer = new YT.Player('player', {
+                height: '100%',
+                width: '100%',
+                videoId: youtubeId,
+                playerVars: {
+                    'playsinline': 1,
+                    'modestbranding': 1,
+                    'rel': 0
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // Fonction appelée quand le lecteur est prêt
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
+
+        // Fonction appelée quand l'état du lecteur change
+        function onPlayerStateChange(event) {
+            // État 0 = vidéo terminée
+            if (event.data === 0) {
+                document.getElementById('endMessage').style.display = 'flex';
+            }
+        }
+
+        // Fonction pour ouvrir la vidéo dans une modale
+        function openVideoModal(youtubeId, title, sponsor) {
+            currentVideoTitle = title;
+            currentYoutubeId = youtubeId;
+            currentSponsor = sponsor;
+            
+            const modal = new bootstrap.Modal(document.getElementById('videoModal'));
+            const modalTitle = document.getElementById('videoModalLabel');
+            
+            modalTitle.textContent = title;
+            
+            // Masquer le message de fin
+            document.getElementById('endMessage').style.display = 'none';
+            
+            // Mettre à jour le sponsor
+            const sponsorSection = document.getElementById('sponsorSection');
+            const sponsorName = document.getElementById('sponsorName');
+            const sponsorLink = document.getElementById('sponsorLink');
+            
+            if (sponsor && sponsor.name) {
+                sponsorName.textContent = sponsor.name;
+                sponsorLink.textContent = sponsor.link;
+                sponsorLink.href = sponsor.link;
+                sponsorSection.style.display = 'flex';
+            } else {
+                sponsorSection.style.display = 'none';
+            }
+            
+            // Créer le lecteur YouTube après un court délai pour s'assurer que le modal est visible
+            setTimeout(() => {
+                createYouTubePlayer(youtubeId);
+            }, 500);
+            
+            // Gérer l'événement de fermeture de la modale
+            const videoModal = document.getElementById('videoModal');
+            const hideModalHandler = function () {
+                if (youtubePlayer && typeof youtubePlayer.stopVideo === 'function') {
+                    youtubePlayer.stopVideo();
+                }
+                videoModal.removeEventListener('hidden.bs.modal', hideModalHandler);
+            };
+            
+            videoModal.addEventListener('hidden.bs.modal', hideModalHandler);
+            
+            modal.show();
+        }
+
+        // Fonction pour filtrer les vidéos par date unique
+        function filterVideosByDate(date) {
+            selectedDate = date;
+            selectedDateRange = null;
+            
+            if (!date) {
+                // Afficher toutes les vidéos si aucune date n'est sélectionnée
+                generateVideoCards(videoData);
+                document.getElementById('selectedDateText').textContent = "Aucune date sélectionnée - Affichage de toutes les vidéos";
+                document.getElementById('noVideosMessage').style.display = 'none';
+                showFilterResultAlert(videoData.length, false);
+                return;
+            }
+            
+            // Formater la date pour la comparaison (YYYY-MM-DD)
+            const filterDate = new Date(date);
+            const filterDateString = filterDate.toISOString().split('T')[0];
+            
+            // Filtrer les vidéos
+            const filteredVideos = videoData.filter(video => {
+                const videoDate = new Date(video.date);
+                const videoDateString = videoDate.toISOString().split('T')[0];
+                return videoDateString === filterDateString;
+            });
+            
+            // Mettre à jour l'interface
+            if (filteredVideos.length > 0) {
+                generateVideoCards(filteredVideos);
+                document.getElementById('selectedDateText').textContent = `Vidéos du ${formatDateForDisplay(filterDateString)}`;
+                document.getElementById('noVideosMessage').style.display = 'none';
+                showFilterResultAlert(filteredVideos.length, true);
+            } else {
+                document.getElementById('videoContainer').innerHTML = '';
+                document.getElementById('selectedDateText').textContent = `Aucune vidéo trouvée pour le ${formatDateForDisplay(filterDateString)}`;
+                document.getElementById('noVideosMessage').style.display = 'block';
+                showFilterResultAlert(0, true);
+            }
+        }
+
+        // Fonction pour filtrer les vidéos par plage de dates
+        function filterVideosByDateRange(startDate, endDate) {
+            selectedDate = null;
+            selectedDateRange = { start: startDate, end: endDate };
+            
+            if (!startDate || !endDate) {
+                // Afficher toutes les vidéos si la plage n'est pas complète
+                generateVideoCards(videoData);
+                document.getElementById('selectedDateText').textContent = "Aucune plage de dates sélectionnée - Affichage de toutes les vidéos";
+                document.getElementById('noVideosMessage').style.display = 'none';
+                showFilterResultAlert(videoData.length, false);
+                return;
+            }
+            
+            // Formater les dates pour la comparaison
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            
+            // Filtrer les vidéos
+            const filteredVideos = videoData.filter(video => {
+                const videoDate = new Date(video.date);
+                return videoDate >= start && videoDate <= end;
+            });
+            
+            // Mettre à jour l'interface
+            if (filteredVideos.length > 0) {
+                generateVideoCards(filteredVideos);
+                document.getElementById('selectedDateText').textContent = `Vidéos ${formatDateRangeForDisplay(startDate, endDate)}`;
+                document.getElementById('noVideosMessage').style.display = 'none';
+                showFilterResultAlert(filteredVideos.length, true);
+            } else {
+                document.getElementById('videoContainer').innerHTML = '';
+                document.getElementById('selectedDateText').textContent = `Aucune vidéo trouvée pour la période ${formatDateRangeForDisplay(startDate, endDate)}`;
+                document.getElementById('noVideosMessage').style.display = 'block';
+                showFilterResultAlert(0, true);
+            }
+        }
+
+        // Fonction pour réinitialiser le filtre
+        function resetDateFilter() {
+            selectedDate = null;
+            selectedDateRange = null;
+            
+            if (flatpickrInstance) {
+                flatpickrInstance.clear();
+            }
+            
+            if (flatpickrRangeInstance) {
+                flatpickrRangeInstance.clear();
+            }
+            
+            generateVideoCards(videoData);
+            document.getElementById('selectedDateText').textContent = "Aucune date sélectionnée - Affichage de toutes les vidéos";
+            document.getElementById('noVideosMessage').style.display = 'none';
+            showFilterResultAlert(videoData.length, false);
+        }
+
+        // Fonction pour changer le type de filtre
+        function changeFilterType(type) {
+            currentFilterType = type;
+            
+            // Mettre à jour les boutons
+            document.querySelectorAll('.filter-type-btn').forEach(btn => {
+                if (btn.dataset.filterType === type) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Afficher/masquer les champs appropriés
+            if (type === 'single') {
+                document.getElementById('singleDateFilter').style.display = 'flex';
+                document.getElementById('dateRangeFilter').style.display = 'none';
+            } else {
+                document.getElementById('singleDateFilter').style.display = 'none';
+                document.getElementById('dateRangeFilter').style.display = 'block';
+            }
+            
+            // Réinitialiser le filtre
+            resetDateFilter();
+        }
+
+        // Fonction pour générer les cartes vidéo
+        function generateVideoCards(videos) {
+            const container = document.getElementById('videoContainer');
+            container.innerHTML = '';
+            
+            videos.forEach(video => {
+                const col = document.createElement('div');
+                col.className = 'col-md-6 col-lg-4 video-card';
+                
+                // Échapper les guillemets simples dans le titre pour éviter les erreurs JavaScript
+                const escapedTitle = video.title.replace(/'/g, "&#39;");
+                
+                col.innerHTML = `
+                    <div class="card h-100">
+                        <div class="video-container" onclick="openVideoModal('${video.youtubeId}', '${escapedTitle}', ${JSON.stringify(video.sponsor).replace(/"/g, '&quot;')})">
+                            <img src="${video.thumbnail}" alt="${video.title}" class="video-thumbnail" onerror="this.style.display='none'; this.parentNode.querySelector('.thumbnail-placeholder').style.display='flex';">
+                            <div class="thumbnail-placeholder" style="display: none;">
+                                ${video.title}
+                            </div>
+                            <div class="play-button">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">${video.title}</h5>
+                            <p class="card-text">${video.description}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="date-badge badge">Ajouté le ${formatDate(video.date)}</span>
+                            </div>
+                            <div class="btn-container mt-3">
+                                <button class="btn watch-btn" onclick="openVideoModal('${video.youtubeId}', '${escapedTitle}', ${JSON.stringify(video.sponsor).replace(/"/g, '&quot;')})">
+                                    <i class="fas fa-play-circle me-1"></i> Regarder
+                                </button>
+                                <button class="btn request-btn" onclick="openRequestModal()">
+                                    <i class="fas fa-video me-1"></i> Demander
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(col);
+            });
+        }
+
+        // Fonctions pour la fenêtre publicitaire
+        function showAd() {
+            const adOverlay = document.getElementById('adOverlay');
+            adOverlay.classList.add('active');
+        }
+
+        function hideAd() {
+            const adOverlay = document.getElementById('adOverlay');
+            adOverlay.classList.remove('active');
+        }
+
+        function contactViaWhatsApp() {
+            const message = "Bonjour, je suis intéressé par la diffusion publicitaire sur votre site.";
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+            hideAd();
+        }
+
+        function contactViaSms() {
+            window.open(`sms:${phoneNumber}`, '_self');
+            hideAd();
+        }
+
+        function contactViaCall() {
+            window.open(`tel:${phoneNumber}`, '_self');
+            hideAd();
+        }
+
+        function setupAdInterval() {
+            // Afficher la pub après 2 secondes
+            setTimeout(showAd, 2000);
+            
+            // Configurer l'intervalle pour répéter toutes les 90 secondes
+            adInterval = setInterval(showAd, 90000);
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Générer les cartes vidéo initiales
+            generateVideoCards(videoData);
+            
+            // Afficher le nombre total de vidéos au chargement
+            setTimeout(() => {
+                showFilterResultAlert(videoData.length, false);
+            }, 1000);
+            
+            // Configurer le bouton d'envoi de demande
+            document.getElementById('sendRequestBtn').addEventListener('click', sendVideoRequest);
+            
+            // Initialiser Flatpickr pour la date unique
+            flatpickrInstance = flatpickr("#dateFilter", {
+                locale: "fr",
+                dateFormat: "Y-m-d",
+                maxDate: "today",
+                onChange: function(selectedDates, dateStr, instance) {
+                    filterVideosByDate(dateStr);
+                }
+            });
+            
+            // Initialiser Flatpickr pour la plage de dates
+            flatpickrRangeInstance = flatpickr("#startDate", {
+                locale: "fr",
+                dateFormat: "Y-m-d",
+                maxDate: "today",
+                onChange: function(selectedDates, dateStr, instance) {
+                    const endDate = document.getElementById('endDate').value;
+                    if (endDate) {
+                        filterVideosByDateRange(dateStr, endDate);
+                    }
+                }
+            });
+            
+            flatpickrRangeInstance = flatpickr("#endDate", {
+                locale: "fr",
+                dateFormat: "Y-m-d",
+                maxDate: "today",
+                onChange: function(selectedDates, dateStr, instance) {
+                    const startDate = document.getElementById('startDate').value;
+                    if (startDate) {
+                        filterVideosByDateRange(startDate, dateStr);
+                    }
+                }
+            });
+            
+            // Configurer le bouton de réinitialisation
+            document.getElementById('resetFilter').addEventListener('click', resetDateFilter);
+            
+            // Configurer les boutons de type de filtre
+            document.querySelectorAll('.filter-type-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    changeFilterType(this.dataset.filterType);
+                });
+            });
+            
+            // Configurer la fenêtre publicitaire
+            document.getElementById('adClose').addEventListener('click', hideAd);
+            document.getElementById('adOkBtn').addEventListener('click', hideAd);
+            document.getElementById('adWhatsapp').addEventListener('click', contactViaWhatsApp);
+            document.getElementById('adSms').addEventListener('click', contactViaSms);
+            document.getElementById('adCall').addEventListener('click', contactViaCall);
+            
+            // Démarrer l'intervalle pour la publicité
+            setupAdInterval();
+        });
+    </script>
+</body>
+</html>
