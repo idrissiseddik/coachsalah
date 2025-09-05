@@ -169,6 +169,25 @@
             color: white;
         }
         
+        .filter-btn {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        
         .card-title {
             color: #2c3e50;
             font-weight: 600;
@@ -357,56 +376,72 @@
             height: 20px;
         }
         
-        /* Styles pour le calendrier de filtre */
-        .calendar-section {
-            background-color: white;
-            border-radius: 8px;
+        /* Styles pour le bouton de filtre */
+        .filter-button-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+        
+        /* Styles pour la modale de filtre - NOUVEAU STYLE */
+        .filter-modal .modal-content {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .filter-modal .modal-header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border-bottom: none;
             padding: 20px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border: 1px solid #e9ecef;
         }
         
-        .calendar-header {
+        .filter-modal .modal-title {
+            font-weight: 700;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .calendar-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #2c3e50;
-            margin: 0;
-        }
-        
-        .filter-controls {
-            display: flex;
             gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
+        }
+        
+        .filter-modal .modal-body {
+            padding: 25px;
+            background-color: #f8f9fa;
         }
         
         .filter-type-selector {
             display: flex;
             gap: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            background: rgba(106, 17, 203, 0.1);
+            padding: 10px;
+            border-radius: 8px;
         }
         
         .filter-type-btn {
-            padding: 8px 15px;
-            border: 1px solid #ced4da;
-            background-color: #f8f9fa;
-            border-radius: 4px;
+            padding: 10px 20px;
+            border: 2px solid rgba(106, 17, 203, 0.3);
+            background-color: transparent;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s;
+            color: #6a11cb;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-type-btn:hover {
+            background-color: rgba(106, 17, 203, 0.1);
+            border-color: rgba(106, 17, 203, 0.5);
         }
         
         .filter-type-btn.active {
-            background-color: #dc3545;
+            background-color: #6a11cb;
             color: white;
-            border-color: #dc3545;
+            border-color: #6a11cb;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         
         .date-range-container {
@@ -414,33 +449,49 @@
             gap: 10px;
             align-items: center;
             flex-wrap: wrap;
-            margin-top: 10px;
+            margin-top: 15px;
         }
         
         .flatpickr-input {
-            max-width: 200px;
-            padding: 8px 12px;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
             font-size: 0.9rem;
+            background: white;
+            color: #495057;
+            transition: all 0.3s;
+        }
+        
+        .flatpickr-input:focus {
+            border-color: #6a11cb;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.2);
         }
         
         .date-separator {
             color: #6c757d;
+            font-weight: 500;
         }
         
-        .reset-filter-btn {
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+        .filter-controls {
+            margin-bottom: 15px;
         }
         
-        .reset-filter-btn:hover {
-            background-color: #5a6268;
+        .selected-date-container {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(106, 17, 203, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(106, 17, 203, 0.1);
+        }
+        
+        #selectedDateText {
+            color: #6a11cb;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .no-videos-message {
@@ -457,26 +508,36 @@
         }
         
         @media (max-width: 768px) {
-            .calendar-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            
-            .filter-controls {
-                width: 100%;
-                justify-content: space-between;
-            }
-            
             .date-range-container {
                 flex-direction: column;
                 align-items: flex-start;
             }
             
-            .flatpickr-input {
-                width: 100%;
-                max-width: none;
+            .filter-type-selector {
+                flex-direction: column;
             }
+        }
+        
+        /* Styles personnalisés pour Flatpickr */
+        .flatpickr-calendar {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .flatpickr-day.selected {
+            background: #6a11cb;
+            border-color: #6a11cb;
+        }
+        
+        .flatpickr-day.today {
+            border-color: #6a11cb;
+        }
+        
+        .flatpickr-day.today:hover {
+            background: #6a11cb;
+            border-color: #6a11cb;
+            color: white;
         }
         
         /* Styles pour la fenêtre publicitaire */
@@ -674,6 +735,45 @@
             font-weight: 500;
             margin-bottom: 5px;
         }
+        
+        /* Styles pour les indicateurs de filtre actif */
+        .filter-indicator {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(106, 17, 203, 0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-left: 10px;
+            font-size: 0.85rem;
+            color: #6a11cb;
+        }
+        
+        .filter-indicator i {
+            margin-right: 5px;
+        }
+        
+        /* Styles pour le bouton d'application du filtre */
+        .apply-filter-btn {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .apply-filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -797,43 +897,58 @@
         </div>
     </div>
 
-    <!-- Contenu principal -->
-    <main class="container my-4">
-        <!-- Section Calendrier/Filtrage -->
-        <section class="calendar-section">
-            <div class="calendar-header">
-                <h2 class="calendar-title">Filtrer les vidéos par date</h2>
-                <div class="filter-controls">
-                    <button id="resetFilter" class="reset-filter-btn">
-                        <i class="fas fa-times me-1"></i> Réinitialiser
+    <!-- Modal pour filtrer par date -->
+    <div class="modal fade filter-modal" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="filterModalLabel"><i class="fas fa-filter"></i> Filtrer par date</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="filter-type-selector">
+                        <button class="filter-type-btn active" data-filter-type="single">
+                            <i class="fas fa-calendar-day"></i> Date unique
+                        </button>
+                        <button class="filter-type-btn" data-filter-type="range">
+                            <i class="fas fa-calendar-week"></i> Plage de dates
+                        </button>
+                    </div>
+                    
+                    <div id="singleDateFilter" class="filter-controls">
+                        <label for="dateFilter" class="form-label">Sélectionner une date :</label>
+                        <input type="text" id="dateFilter" class="flatpickr-input" placeholder="Choisir une date">
+                    </div>
+                    
+                    <div id="dateRangeFilter" class="filter-controls" style="display: none;">
+                        <label class="form-label">Sélectionner une plage de dates :</label>
+                        <div class="date-range-container">
+                            <input type="text" id="startDate" class="flatpickr-input" placeholder="Date de début">
+                            <span class="date-separator">au</span>
+                            <input type="text" id="endDate" class="flatpickr-input" placeholder="Date de fin">
+                        </div>
+                    </div>
+                    
+                    <div class="selected-date-container mt-3">
+                        <span id="selectedDateText"><i class="fas fa-info-circle"></i> Aucune date sélectionnée - Affichage de toutes les vidéos</span>
+                    </div>
+                    
+                    <button class="apply-filter-btn" id="applyFilter">
+                        <i class="fas fa-check"></i> Appliquer le filtre
                     </button>
                 </div>
             </div>
-            
-            <div class="filter-type-selector">
-                <button class="filter-type-btn active" data-filter-type="single">Date unique</button>
-                <button class="filter-type-btn" data-filter-type="range">Plage de dates</button>
-            </div>
-            
-            <div id="singleDateFilter" class="filter-controls">
-                <input type="text" id="dateFilter" class="flatpickr-input" placeholder="Sélectionner une date">
-            </div>
-            
-            <div id="dateRangeFilter" class="filter-controls" style="display: none;">
-                <div class="date-range-container">
-                    <input type="text" id="startDate" class="flatpickr-input" placeholder="Date de début">
-                    <span class="date-separator">au</span>
-                    <input type="text" id="endDate" class="flatpickr-input" placeholder="Date de fin">
-                </div>
-            </div>
-            
-            <div class="selected-date-container mt-3">
-                <span id="selectedDateText">Aucune date sélectionnée - Affichage de toutes les vidéos</span>
-            </div>
-        </section>
-        
-        <!-- Petit espace entre le header et les cartes -->
-        <div class="content-spacer"></div>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <main class="container my-4">
+        <!-- Bouton pour ouvrir la modale de filtre -->
+        <div class="filter-button-container">
+            <button class="filter-btn" data-bs-toggle="modal" data-bs-target="#filterModal">
+                <i class="fas fa-filter"></i> Filtrer par date
+            </button>
+        </div>
         
         <div class="row" id="videoContainer">
             <!-- Les cartes vidéo seront générées dynamiquement par JavaScript -->
@@ -844,6 +959,9 @@
             <i class="fas fa-video-slash"></i>
             <h3>Aucune vidéo trouvée</h3>
             <p>Aucune vidéo ne correspond aux critères de filtrage sélectionnés.</p>
+            <button class="btn filter-btn mt-3" data-bs-toggle="modal" data-bs-target="#filterModal">
+                <i class="fas fa-filter"></i> Modifier le filtre
+            </button>
         </div>
         
         <!-- Espacement supplémentaire -->
@@ -911,7 +1029,7 @@
             },
             {
                 id: 2,
-                title: "ريمونتادا في دقيقة",
+                title: "ريمونتادا في دقيقة!",
                 description: "ريمونتادا في دقيقة! تحليل تكتيكي لمباراة ريال مدريد ومايوركا.. كيف قلب ألونسو الطاولة؟",
                 youtubeId: "bawQrbv85Nw",
                 date: "2025-08-31",
@@ -1168,7 +1286,7 @@
             if (!date) {
                 // Afficher toutes les vidéos si aucune date n'est sélectionnée
                 generateVideoCards(videoData);
-                document.getElementById('selectedDateText').textContent = "Aucune date sélectionnée - Affichage de toutes les vidéos";
+                document.getElementById('selectedDateText').innerHTML = "<i class='fas fa-info-circle'></i> Aucune date sélectionnée - Affichage de toutes les vidéos";
                 document.getElementById('noVideosMessage').style.display = 'none';
                 showFilterResultAlert(videoData.length, false);
                 return;
@@ -1188,12 +1306,12 @@
             // Mettre à jour l'interface
             if (filteredVideos.length > 0) {
                 generateVideoCards(filteredVideos);
-                document.getElementById('selectedDateText').textContent = `Vidéos du ${formatDateForDisplay(filterDateString)}`;
+                document.getElementById('selectedDateText').innerHTML = `<i class="fas fa-filter"></i> Vidéos du ${formatDateForDisplay(filterDateString)}`;
                 document.getElementById('noVideosMessage').style.display = 'none';
                 showFilterResultAlert(filteredVideos.length, true);
             } else {
                 document.getElementById('videoContainer').innerHTML = '';
-                document.getElementById('selectedDateText').textContent = `Aucune vidéo trouvée pour le ${formatDateForDisplay(filterDateString)}`;
+                document.getElementById('selectedDateText').innerHTML = `<i class="fas fa-exclamation-circle"></i> Aucune vidéo trouvée pour le ${formatDateForDisplay(filterDateString)}`;
                 document.getElementById('noVideosMessage').style.display = 'block';
                 showFilterResultAlert(0, true);
             }
@@ -1207,7 +1325,7 @@
             if (!startDate || !endDate) {
                 // Afficher toutes les vidéos si la plage n'est pas complète
                 generateVideoCards(videoData);
-                document.getElementById('selectedDateText').textContent = "Aucune plage de dates sélectionnée - Affichage de toutes les vidéos";
+                document.getElementById('selectedDateText').innerHTML = "<i class='fas fa-info-circle'></i> Aucune plage de dates sélectionnée - Affichage de toutes les vidéos";
                 document.getElementById('noVideosMessage').style.display = 'none';
                 showFilterResultAlert(videoData.length, false);
                 return;
@@ -1226,12 +1344,12 @@
             // Mettre à jour l'interface
             if (filteredVideos.length > 0) {
                 generateVideoCards(filteredVideos);
-                document.getElementById('selectedDateText').textContent = `Vidéos ${formatDateRangeForDisplay(startDate, endDate)}`;
+                document.getElementById('selectedDateText').innerHTML = `<i class="fas fa-filter"></i> Vidéos ${formatDateRangeForDisplay(startDate, endDate)}`;
                 document.getElementById('noVideosMessage').style.display = 'none';
                 showFilterResultAlert(filteredVideos.length, true);
             } else {
                 document.getElementById('videoContainer').innerHTML = '';
-                document.getElementById('selectedDateText').textContent = `Aucune vidéo trouvée pour la période ${formatDateRangeForDisplay(startDate, endDate)}`;
+                document.getElementById('selectedDateText').innerHTML = `<i class="fas fa-exclamation-circle"></i> Aucune vidéo trouvée pour la période ${formatDateRangeForDisplay(startDate, endDate)}`;
                 document.getElementById('noVideosMessage').style.display = 'block';
                 showFilterResultAlert(0, true);
             }
@@ -1251,7 +1369,7 @@
             }
             
             generateVideoCards(videoData);
-            document.getElementById('selectedDateText').textContent = "Aucune date sélectionnée - Affichage de toutes les vidéos";
+            document.getElementById('selectedDateText').innerHTML = "<i class='fas fa-info-circle'></i> Aucune date sélectionnée - Affichage de toutes les vidéos";
             document.getElementById('noVideosMessage').style.display = 'none';
             showFilterResultAlert(videoData.length, false);
         }
@@ -1271,15 +1389,28 @@
             
             // Afficher/masquer les champs appropriés
             if (type === 'single') {
-                document.getElementById('singleDateFilter').style.display = 'flex';
+                document.getElementById('singleDateFilter').style.display = 'block';
                 document.getElementById('dateRangeFilter').style.display = 'none';
             } else {
                 document.getElementById('singleDateFilter').style.display = 'none';
                 document.getElementById('dateRangeFilter').style.display = 'block';
             }
+        }
+
+        // Fonction pour appliquer le filtre et fermer la modale
+        function applyFilter() {
+            if (currentFilterType === 'single') {
+                const date = document.getElementById('dateFilter').value;
+                filterVideosByDate(date);
+            } else {
+                const startDate = document.getElementById('startDate').value;
+                const endDate = document.getElementById('endDate').value;
+                filterVideosByDateRange(startDate, endDate);
+            }
             
-            // Réinitialiser le filtre
-            resetDateFilter();
+            // Fermer la modale
+            const filterModal = bootstrap.Modal.getInstance(document.getElementById('filterModal'));
+            filterModal.hide();
         }
 
         // Fonction pour générer les cartes vidéo
@@ -1382,7 +1513,7 @@
                 dateFormat: "Y-m-d",
                 maxDate: "today",
                 onChange: function(selectedDates, dateStr, instance) {
-                    filterVideosByDate(dateStr);
+                    document.getElementById('selectedDateText').innerHTML = `<i class="fas fa-filter"></i> Vidéos du ${formatDateForDisplay(dateStr)}`;
                 }
             });
             
@@ -1394,7 +1525,7 @@
                 onChange: function(selectedDates, dateStr, instance) {
                     const endDate = document.getElementById('endDate').value;
                     if (endDate) {
-                        filterVideosByDateRange(dateStr, endDate);
+                        document.getElementById('selectedDateText').innerHTML = `<i class="fas fa-filter"></i> Vidéos ${formatDateRangeForDisplay(dateStr, endDate)}`;
                     }
                 }
             });
@@ -1406,19 +1537,24 @@
                 onChange: function(selectedDates, dateStr, instance) {
                     const startDate = document.getElementById('startDate').value;
                     if (startDate) {
-                        filterVideosByDateRange(startDate, dateStr);
+                        document.getElementById('selectedDateText').innerHTML = `<i class="fas fa-filter"></i> Vidéos ${formatDateRangeForDisplay(startDate, dateStr)}`;
                     }
                 }
             });
-            
-            // Configurer le bouton de réinitialisation
-            document.getElementById('resetFilter').addEventListener('click', resetDateFilter);
             
             // Configurer les boutons de type de filtre
             document.querySelectorAll('.filter-type-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     changeFilterType(this.dataset.filterType);
                 });
+            });
+            
+            // Configurer le bouton d'application du filtre
+            document.getElementById('applyFilter').addEventListener('click', applyFilter);
+            
+            // Réinitialiser le filtre lorsque la modale est fermée
+            document.getElementById('filterModal').addEventListener('hidden.bs.modal', function () {
+                // On ne réinitialise pas le filtre, mais on garde les sélections
             });
             
             // Configurer la fenêtre publicitaire
